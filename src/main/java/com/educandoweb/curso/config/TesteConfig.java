@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.educandoweb.curso.entities.Client;
 import com.educandoweb.curso.entities.Order;
 import com.educandoweb.curso.entities.User;
+import com.educandoweb.curso.entities.enums.OrderStatus;
 import com.educandoweb.curso.repositories.ClientRepository;
 import com.educandoweb.curso.repositories.OrderRepository;
 import com.educandoweb.curso.repositories.UserRepository;
@@ -41,9 +42,9 @@ public class TesteConfig implements CommandLineRunner{
 		Client c3 = new Client(null, "Rafael Nunes", "00000000000", "rafa.nuns17@gmail.com");
 		Client c4 = new Client(null, "Aynara Magalhaes", "", "aynara.magalhaes@gmail.com");
 		
-		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), u1); 
-		Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), u2); 
-		Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), u1); 
+		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), OrderStatus.PAID, u1); 
+		Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.WAITING_PAYMENT, u2); 
+		Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.WAITING_PAYMENT, u1); 
 		
 		userRepository.saveAll(Arrays.asList(u1, u2, u3, u4));
 		clientRepository.saveAll(Arrays.asList(c1, c2, c3, c4));
