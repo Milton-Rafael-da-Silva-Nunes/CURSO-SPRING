@@ -31,4 +31,14 @@ public class CategoryService {
 	public void delete(Long id) {
 		repository.deleteById(id);
 	}
+	
+	public Category update(Long id, Category obj) {
+		Category category = repository.getReferenceById(id);
+		updateData(category, obj);
+		return repository.save(category);
+	}
+
+	private void updateData(Category category, Category obj) {
+		category.setName(obj.getName());
+	}
 }
