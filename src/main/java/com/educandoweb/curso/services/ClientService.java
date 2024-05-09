@@ -31,4 +31,16 @@ public class ClientService {
 	public void delete(Long id) {
 		repository.deleteById(id);
 	}
+	
+	public Client update(Long id, Client obj) {
+		Client client = repository.getReferenceById(id);
+		updateDate(client, obj);
+		return repository.save(client);
+	}
+
+	private void updateDate(Client client, Client obj) {
+		client.setName(obj.getName());
+		client.setCpf(obj.getCpf());
+		client.setEmail(obj.getEmail());
+	}
 }
