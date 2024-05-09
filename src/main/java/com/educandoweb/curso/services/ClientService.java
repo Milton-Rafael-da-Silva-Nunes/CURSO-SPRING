@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.educandoweb.curso.entities.Client;
 import com.educandoweb.curso.repositories.ClientRepository;
+import com.educandoweb.curso.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class ClientService {
@@ -21,7 +22,7 @@ public class ClientService {
 	
 	public Client findById(Long id) {
 		Optional<Client> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public Client insert(Client obj) {
