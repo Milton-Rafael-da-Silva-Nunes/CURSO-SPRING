@@ -28,4 +28,8 @@ public class ProductService {
 	public void insert(Product obj) {
 		repository.save(obj);
 	}
+	
+	public void delete(Long id) {
+		repository.deleteById(id);
+	}
 }
