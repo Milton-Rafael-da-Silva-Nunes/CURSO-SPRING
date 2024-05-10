@@ -13,6 +13,8 @@ import com.educandoweb.curso.repositories.ClientRepository;
 import com.educandoweb.curso.services.exceptions.DatabaseException;
 import com.educandoweb.curso.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class ClientService {
 	
@@ -43,9 +45,13 @@ public class ClientService {
 	}
 	
 	public Client update(Long id, Client obj) {
-		Client client = repository.getReferenceById(id);
-		updateDate(client, obj);
-		return repository.save(client);
+		try {
+			Client client = repository.getReferenceById(id);
+			updateDate(client, obj);
+			return repository.save(client);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateDate(Client client, Client obj) {
