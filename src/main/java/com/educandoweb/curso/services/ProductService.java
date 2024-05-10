@@ -13,6 +13,8 @@ import com.educandoweb.curso.repositories.ProductRepository;
 import com.educandoweb.curso.services.exceptions.DatabaseException;
 import com.educandoweb.curso.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 
 @Service
 public class ProductService {
@@ -44,9 +46,13 @@ public class ProductService {
 	}
 	
 	public Product update(Long id, Product obj) {
-		Product product = repository.getReferenceById(id);
-		updateDate(product, obj);
-		return repository.save(product);
+		try {
+			Product product = repository.getReferenceById(id);
+			updateDate(product, obj);
+			return repository.save(product);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateDate(Product product, Product obj) {
