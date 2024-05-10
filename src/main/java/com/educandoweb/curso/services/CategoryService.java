@@ -13,6 +13,8 @@ import com.educandoweb.curso.repositories.CategoryRepository;
 import com.educandoweb.curso.services.exceptions.DatabaseException;
 import com.educandoweb.curso.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class CategoryService {
 	
@@ -43,9 +45,13 @@ public class CategoryService {
 	}
 	
 	public Category update(Long id, Category obj) {
-		Category category = repository.getReferenceById(id);
-		updateData(category, obj);
-		return repository.save(category);
+		try {
+			Category category = repository.getReferenceById(id);
+			updateData(category, obj);
+			return repository.save(category);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateData(Category category, Category obj) {
